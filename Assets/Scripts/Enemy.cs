@@ -76,6 +76,7 @@ public class Enemy : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             isTouchingPlayer = true;
+            rb2.constraints = RigidbodyConstraints2D.FreezePosition;
             if (attackTimer >= attackSpeed)
             {
                 attackTimer = 0;
@@ -89,6 +90,7 @@ public class Enemy : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            rb2.constraints = RigidbodyConstraints2D.None;
             isTouchingPlayer = false;
         }
     }
