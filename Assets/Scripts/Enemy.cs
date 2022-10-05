@@ -71,12 +71,11 @@ public class Enemy : MonoBehaviour
         isFacingRight = !isFacingRight;
     }
 
-    private void OnTriggerStay2D(Collider2D other)
+    private void OnCollisionStay2D(Collision2D other)
     {
-        if (other.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player"))
         {
             isTouchingPlayer = true;
-            rb2.constraints = RigidbodyConstraints2D.FreezePosition;
             if (attackTimer >= attackSpeed)
             {
                 attackTimer = 0;
@@ -86,15 +85,13 @@ public class Enemy : MonoBehaviour
     }
 
 
-    private void OnTriggerExit2D(Collider2D other)
+    private void OnCollisionExit2D(Collision2D other)
     {
-        if (other.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player"))
         {
-            rb2.constraints = RigidbodyConstraints2D.None;
             isTouchingPlayer = false;
         }
     }
-
 
     private void Move()
     {
