@@ -14,7 +14,6 @@ public class Player : MonoBehaviour
             if (health <= 0)
             {
                 print(health);
-                print("Player died!");
             }
         }
     }

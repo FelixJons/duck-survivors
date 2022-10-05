@@ -5,19 +5,20 @@ public class Bullet : MonoBehaviour
     [SerializeField] private float speed = 3f;
     [SerializeField] private int damage = 1;
     [SerializeField] private float timeBeforeDestroyed = 5f;
+
     private float destroyTimer = 0f;
-    
+
     void Update()
     {
         destroyTimer += Time.deltaTime;
-        if(destroyTimer >= timeBeforeDestroyed)
+        if (destroyTimer >= timeBeforeDestroyed)
         {
             Destroy(gameObject);
         }
-        
+
         transform.position += transform.right * (speed * Time.deltaTime);
     }
-    
+
     /// <summary>
     /// Sent when another object enters a trigger collider attached to this object (2D physics only).
     /// <para></para>
@@ -34,8 +35,7 @@ public class Bullet : MonoBehaviour
         {
             col.gameObject.GetComponent<Enemy>().Health -= damage;
         }
+
         Destroy(gameObject);
     }
-    
-    
 }

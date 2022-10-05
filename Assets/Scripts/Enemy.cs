@@ -5,20 +5,23 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    private Rigidbody2D rb2;
     [SerializeField] private Transform player;
     [SerializeField] private int health = 1;
     [SerializeField] private float movementSpeed = 1f;
     [SerializeField] private float attackSpeed = 1f;
-    private float attackTimer;
     [SerializeField] private int damage = 1;
+
+    private float attackTimer;
+    private Rigidbody2D rb2;
     private bool isTouchingPlayer;
-    private bool isFacingRight = true;
+    private bool isFacingRight;
 
     private void OnEnable()
     {
         attackTimer = 0;
         isTouchingPlayer = false;
+        // Must be true as of now since the enemies spawns facing right
+        isFacingRight = true;
     }
 
     public int Health
@@ -44,11 +47,11 @@ public class Enemy : MonoBehaviour
     {
         attackTimer += Time.deltaTime;
 
+        // Returns the angle between the zero vector and the vector that ends at vector made up by the
+        // parameters (x,y). Can handle perpendicular angles and avoid division by zero exceptions. 
         float angleBetweenEnemyAndPlayer = Mathf.Atan2(player.position.y - transform.position.y,
             player.position.x - transform.position.x);
-
-        print(angleBetweenEnemyAndPlayer);
-
+        
         switch (Mathf.Abs(angleBetweenEnemyAndPlayer))
         {
             case > Mathf.PI / 2.0f when isFacingRight:
@@ -56,7 +59,6 @@ public class Enemy : MonoBehaviour
                 Flip();
                 break;
         }
-
 
         if (!isTouchingPlayer)
         {
@@ -66,7 +68,6 @@ public class Enemy : MonoBehaviour
 
     private void Flip()
     {
-        print("Flip flip");
         transform.eulerAngles = isFacingRight ? new Vector3(0, 180) : new Vector3(0, 0);
         isFacingRight = !isFacingRight;
     }
@@ -84,7 +85,6 @@ public class Enemy : MonoBehaviour
         }
     }
 
-
     private void OnCollisionExit2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("Player"))
@@ -95,7 +95,6 @@ public class Enemy : MonoBehaviour
 
     private void Move()
     {
-        transform.position = Vector2.MoveTowards(transform.position, player.position,
-            movementSpeed * Time.deltaTime);
+        rb2.velocity = (player.position - transform.position).normalized * movementSpeed;
     }
 }

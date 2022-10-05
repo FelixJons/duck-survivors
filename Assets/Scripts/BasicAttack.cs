@@ -6,9 +6,7 @@ public class BasicAttack : MonoBehaviour
     
     [SerializeField] private float attackSpeed = 1f;
     [SerializeField] private GameObject bullet;
-    // Start is called before the first frame update
 
-    // Update is called once per frame
     void Update()
     {
         attackTimer += Time.deltaTime;
