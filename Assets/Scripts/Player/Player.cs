@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
             health = value;
             if (health <= 0)
             {
-                print(health);
+                // Die
             }
         }
     }

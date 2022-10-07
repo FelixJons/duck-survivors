@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] private Transform player;
+    [SerializeField] public Transform player;
     [SerializeField] private int health = 1;
     [SerializeField] private float movementSpeed = 1f;
     [SerializeField] private float attackSpeed = 1f;
