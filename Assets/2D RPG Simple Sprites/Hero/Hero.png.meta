@@ -261,7 +261,7 @@ TextureImporter:
       213: -7502329717069919895
     second: Hero 85
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -278,7 +278,6 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
-    flipGreenChannel: 0
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
@@ -322,10 +321,34 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
-  swizzle: 50462976
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
+    maxTextureSize: 800
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 800
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
     maxTextureSize: 800
     resizeAlgorithm: 0
     textureFormat: -1
@@ -348,7 +371,7 @@ TextureImporter:
         width: 80
         height: 80
       alignment: 9
-      pivot: {x: 0.5, y: 0.4}
+      pivot: {x: 0.5, y: 0.35}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -2116,7 +2139,6 @@ TextureImporter:
     nameFileIdTable:
       Hero_67: 175669244
       Hero_23: -235792780
-      Hero_72: -890558777
       Hero_37: -421512632
       Hero_53: 1612301971
       Hero_55: 1342415011
@@ -2151,7 +2173,6 @@ TextureImporter:
       Hero_81: 2040123077
       Hero_13: -296845893
       Hero_31: -1081982401
-      Hero_3: 607461333
       Hero_26: -2146824073
       Hero_78: 630231871
       Hero_8: 740702853
@@ -2159,9 +2180,10 @@ TextureImporter:
       Hero_2: 1640786161
       Hero_62: -715422228
       Hero_64: -1610666035
+      Hero_3: 607461333
       Hero_14: 347904819
-      Hero_40: 280993622
       Hero_0: -1168764979
+      Hero_40: 280993622
       Hero_20: 2079548784
       Hero_27: 165769887
       Hero_66: -1139677440
@@ -2196,10 +2218,12 @@ TextureImporter:
       Hero_73: 275418040
       Hero_28: 1514225759
       Hero_79: -232326184
+      Hero_72: -890558777
       Hero_9: 1232277366
       Hero_65: -1819471713
   spritePackingTag: 
   pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 
