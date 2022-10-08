@@ -7,6 +7,8 @@ public class Bullet : MonoBehaviour
     [SerializeField] private float timeBeforeDestroyed = 5f;
 
     private float destroyTimer = 0f;
+    
+    
 
     void Update()
     {
