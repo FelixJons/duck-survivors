@@ -8,10 +8,14 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 moveDirection;
     private bool isFacingRight = true;
     [SerializeField] private float speed = 3f;
+    private bool isRecievingPlayerInput = false;
+    private Animator animator;
     
+
     private void Awake()
     {
         rb2 = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
         playerInputHandler = GetComponent<PlayerInputHandler>();
         isFacingRight = true;
     }
@@ -20,6 +24,9 @@ public class PlayerMovement : MonoBehaviour
     {
         SetDirection();
         MovePosition();
+
+        animator.speed = (isRecievingPlayerInput ? 1f : 0f);
+
     }
 
     private void MovePosition()
@@ -31,6 +38,8 @@ public class PlayerMovement : MonoBehaviour
     private void SetDirection()
     {
         moveDirection = playerInputHandler.MoveInput;
+
+        isRecievingPlayerInput = (moveDirection != Vector2.zero);
 
         switch (moveDirection.x)
         {

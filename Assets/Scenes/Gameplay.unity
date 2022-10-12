@@ -15817,6 +15817,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 8812273925491251782, guid: bc6b44971456ba146869e60addadf59f, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 912606150, guid: 50899dae02c96eb4ea6881c786dd886c, type: 3}
     - target: {fileID: 8812273925491251783, guid: bc6b44971456ba146869e60addadf59f, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -15863,3 +15867,57 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc6b44971456ba146869e60addadf59f, type: 3}
+--- !u!1 &8812273927081776821 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8812273925491251780, guid: bc6b44971456ba146869e60addadf59f, type: 3}
+  m_PrefabInstance: {fileID: 8812273927081776820}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &8812273927081776822
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8812273927081776821}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0f505c20e78990c41a3b10d8a5b96f23, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &8812273927081776823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8812273927081776821}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed8b1ae4e4e52b34ea557c1c11e076fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_CategoryHash: 0
+  m_labelHash: 0
+  m_SpriteKey: 5160.445
+--- !u!114 &8812273927081776824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8812273927081776821}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c29cff538c195c249b69c6f2236de67b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Library: []
+  m_SpriteLibraryAsset: {fileID: 7108339969198208228, guid: a07be7686e7f931449fb00ac8b389323, type: 3}
