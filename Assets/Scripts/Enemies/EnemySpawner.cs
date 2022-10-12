@@ -13,27 +13,14 @@ namespace Enemies
         [SerializeField] private Transform player;
 
         private Camera mainCamera;
+        [SerializeField] private int spawnMargin = 1;
 
         private void Start()
         {
             mainCamera = Camera.main;
-            
+
             Spawn();
         }
-
-        private bool CellHasCollider(Vector3 cellWorldPos)
-        {
-            var c = Physics2D.OverlapBox((Vector2) cellWorldPos + new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), 0);
-            return c != null;
-        }
-
-        private bool CellIsInsideCamera(Vector3 cellWordPos)
-        {
-            Vector3 screenPosition = mainCamera.WorldToScreenPoint(cellWordPos);
-            return screenPosition.x + pixelsPerUnit >= 0 && screenPosition.x - pixelsPerUnit <= Screen.width &&
-                   screenPosition.y + pixelsPerUnit >= 0 && screenPosition.y - pixelsPerUnit <= Screen.height;
-        }
-
 
         private void Spawn()
         {
@@ -50,12 +37,15 @@ namespace Enemies
         {
             List<Vector3> availableSpawnPositions = new List<Vector3>();
 
-            foreach (Vector3Int pos in tilemap.cellBounds.allPositionsWithin)
+            // Gets all positions inside the bounds of tilemap.
+            foreach (Vector3Int localPosition in tilemap.cellBounds.allPositionsWithin)
             {
-                Vector3Int localPosition = new Vector3Int(pos.x, pos.y, pos.z);
-                Vector3 worldPosition = tilemap.CellToWorld(localPosition);
+                // Check if tile has a tile at the local position within the bounds.
                 if (tilemap.HasTile(localPosition))
                 {
+                    Vector3 worldPosition = tilemap.CellToWorld(localPosition);
+
+                    // If the cell has a collider in it or it is inside the camera -> continue.
                     if (CellHasCollider(worldPosition) || CellIsInsideCamera(worldPosition))
                     {
                         continue;
@@ -66,6 +56,25 @@ namespace Enemies
             }
 
             return availableSpawnPositions;
+        }
+
+        private bool CellHasCollider(Vector3 cellWorldPos)
+        {
+            // Projects a box with centre at the specified position. The size is for "both" sides. 
+            Collider2D col = Physics2D.OverlapBox((Vector2) cellWorldPos + new Vector2(0.5f, 0.5f),
+                new Vector2(0.5f, 0.5f), 0);
+            return col != null;
+        }
+
+        private bool CellIsInsideCamera(Vector3 cellWordPosition)
+        {
+            Vector3 screenPosition = mainCamera.WorldToScreenPoint(cellWordPosition);
+
+            // Check if the given point is within the screen position plus an additional margin.
+            return screenPosition.x + spawnMargin * pixelsPerUnit >= 0 &&
+                   screenPosition.x - spawnMargin * pixelsPerUnit <= Screen.width &&
+                   screenPosition.y + spawnMargin * pixelsPerUnit >= 0 &&
+                   screenPosition.y - spawnMargin * pixelsPerUnit <= Screen.height;
         }
     }
 }
