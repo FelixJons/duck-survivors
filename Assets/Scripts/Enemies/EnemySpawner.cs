@@ -11,7 +11,8 @@ namespace Enemies
         [SerializeField] private Enemy enemy;
         [SerializeField] private int pixelsPerUnit = 16;
         [SerializeField] private Transform player;
-        [SerializeField] private int spawnMargin = 1;
+        [SerializeField] private int screenMargin = 1;
+        [SerializeField] private int spawnMargin = 3;
 
         private Camera mainCamera;
         private List<Vector3> cellsWithTileWorld;
@@ -60,13 +61,18 @@ namespace Enemies
 
             foreach (Vector3 tileWorldPosition in cellsWithTileWorld)
             {
-                // If the cell has a collider in it or it is inside the camera -> continue.
-                if (CellHasCollider(tileWorldPosition) || CellIsInsideCamera(tileWorldPosition))
+                // If the cell has a collider in it or it is inside the camera + screenMargin -> continue.
+                if (CellHasCollider(tileWorldPosition) ||
+                    CellIsInsideScreenWithMargin(tileWorldPosition, screenMargin))
                 {
                     continue;
                 }
-
-                availableSpawnPositions.Add(tileWorldPosition);
+                
+                // If the cell is outside of the camera + margin but inside camera + spawnMargin -> spawn.
+                if (CellIsInsideScreenWithMargin(tileWorldPosition, spawnMargin))
+                {
+                    availableSpawnPositions.Add(tileWorldPosition);
+                }
             }
 
             return availableSpawnPositions;
@@ -80,15 +86,16 @@ namespace Enemies
             return col != null;
         }
 
-        private bool CellIsInsideCamera(Vector3 cellWordPosition)
+
+        private bool CellIsInsideScreenWithMargin(Vector3 cellWorldPosition, int marginInCellDistance)
         {
-            Vector3 screenPosition = mainCamera.WorldToScreenPoint(cellWordPosition);
+            Vector3 screenPosition = mainCamera.WorldToScreenPoint(cellWorldPosition);
 
             // Check if the given point is within the screen position plus an additional margin.
-            return screenPosition.x + spawnMargin * pixelsPerUnit >= 0 &&
-                   screenPosition.x - spawnMargin * pixelsPerUnit <= Screen.width &&
-                   screenPosition.y + spawnMargin * pixelsPerUnit >= 0 &&
-                   screenPosition.y - spawnMargin * pixelsPerUnit <= Screen.height;
+            return screenPosition.x + marginInCellDistance * pixelsPerUnit >= 0 &&
+                   screenPosition.x - marginInCellDistance * pixelsPerUnit <= Screen.width &&
+                   screenPosition.y + marginInCellDistance * pixelsPerUnit >= 0 &&
+                   screenPosition.y - marginInCellDistance * pixelsPerUnit <= Screen.height;
         }
     }
 }
