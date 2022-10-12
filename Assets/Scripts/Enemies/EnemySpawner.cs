@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using Random = UnityEngine.Random;
 
 namespace Enemies
 {
@@ -12,7 +13,8 @@ namespace Enemies
         [SerializeField] private int pixelsPerUnit = 16;
         [SerializeField] private Transform player;
         [SerializeField] private int screenMargin = 1;
-        [SerializeField] private int spawnMargin = 3;
+        [SerializeField] private int spawnDistanceOutsideOfCamera = 3;
+        [SerializeField] private int numberOfEnemiesToSpawn;
 
         private Camera mainCamera;
         private List<Vector3> cellsWithTileWorld;
@@ -31,7 +33,20 @@ namespace Enemies
         {
             List<Vector3> availableSpawnPositions = GetAvailableSpawnPositions();
 
-            foreach (Vector3 worldPosition in availableSpawnPositions)
+            HashSet<Vector3> spawnPositions = new HashSet<Vector3>();
+
+            for (int i = 0; i < numberOfEnemiesToSpawn; i++)
+            {
+                int randomNumber = Random.Range(0, availableSpawnPositions.Count);
+                while (spawnPositions.Contains(availableSpawnPositions[randomNumber]))
+                {
+                    randomNumber = Random.Range(0, availableSpawnPositions.Count);
+                }
+
+                spawnPositions.Add(availableSpawnPositions[randomNumber]);
+            }
+
+            foreach (Vector3 worldPosition in spawnPositions)
             {
                 var e = Instantiate(enemy, worldPosition, quaternion.identity);
                 e.GetComponent<Enemy>().player = player;
@@ -67,9 +82,9 @@ namespace Enemies
                 {
                     continue;
                 }
-                
+
                 // If the cell is outside of the camera + margin but inside camera + spawnMargin -> spawn.
-                if (CellIsInsideScreenWithMargin(tileWorldPosition, spawnMargin))
+                if (CellIsInsideScreenWithMargin(tileWorldPosition, spawnDistanceOutsideOfCamera))
                 {
                     availableSpawnPositions.Add(tileWorldPosition);
                 }
