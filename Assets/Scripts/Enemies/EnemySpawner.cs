@@ -11,13 +11,17 @@ namespace Enemies
         [SerializeField] private Enemy enemy;
         [SerializeField] private int pixelsPerUnit = 16;
         [SerializeField] private Transform player;
+        [SerializeField] private int spawnMargin = 1;
 
         private Camera mainCamera;
-        [SerializeField] private int spawnMargin = 1;
+        private List<Vector3> cellsWithTileWorld;
+
 
         private void Start()
         {
             mainCamera = Camera.main;
+
+            cellsWithTileWorld = GetCellsWithTiles();
 
             Spawn();
         }
@@ -33,26 +37,36 @@ namespace Enemies
             }
         }
 
-        private List<Vector3> GetAvailableSpawnPositions()
+        private List<Vector3> GetCellsWithTiles()
         {
-            List<Vector3> availableSpawnPositions = new List<Vector3>();
+            List<Vector3> cellsWithTiles = new List<Vector3>();
 
             // Gets all positions inside the bounds of tilemap.
             foreach (Vector3Int localPosition in tilemap.cellBounds.allPositionsWithin)
             {
-                // Check if tile has a tile at the local position within the bounds.
                 if (tilemap.HasTile(localPosition))
                 {
                     Vector3 worldPosition = tilemap.CellToWorld(localPosition);
-
-                    // If the cell has a collider in it or it is inside the camera -> continue.
-                    if (CellHasCollider(worldPosition) || CellIsInsideCamera(worldPosition))
-                    {
-                        continue;
-                    }
-
-                    availableSpawnPositions.Add(worldPosition);
+                    cellsWithTiles.Add(worldPosition);
                 }
+            }
+
+            return cellsWithTiles;
+        }
+
+        private List<Vector3> GetAvailableSpawnPositions()
+        {
+            List<Vector3> availableSpawnPositions = new List<Vector3>();
+
+            foreach (Vector3 tileWorldPosition in cellsWithTileWorld)
+            {
+                // If the cell has a collider in it or it is inside the camera -> continue.
+                if (CellHasCollider(tileWorldPosition) || CellIsInsideCamera(tileWorldPosition))
+                {
+                    continue;
+                }
+
+                availableSpawnPositions.Add(tileWorldPosition);
             }
 
             return availableSpawnPositions;

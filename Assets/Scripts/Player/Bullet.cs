@@ -8,17 +8,20 @@ public class Bullet : MonoBehaviour
 
     private float destroyTimer = 0f;
     
-    
-
     void Update()
+    {
+        SelfDestructTick();
+
+        transform.position += transform.right * (speed * Time.deltaTime);
+    }
+
+    private void SelfDestructTick()
     {
         destroyTimer += Time.deltaTime;
         if (destroyTimer >= timeBeforeDestroyed)
         {
             Destroy(gameObject);
         }
-
-        transform.position += transform.right * (speed * Time.deltaTime);
     }
 
     /// <summary>
