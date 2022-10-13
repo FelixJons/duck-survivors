@@ -15736,10 +15736,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy Spawner
       objectReference: {fileID: 0}
-    - target: {fileID: 6920173313082963830, guid: 4473164a3b993574a9f3c6db04d94f3e, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6920173313082963832, guid: 4473164a3b993574a9f3c6db04d94f3e, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -15785,10 +15781,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6920173313082963833, guid: 4473164a3b993574a9f3c6db04d94f3e, type: 3}
-      propertyPath: enemy
-      value: 
-      objectReference: {fileID: 3680697262525354299, guid: 96173c9733955a845a3bcb5d94d875af, type: 3}
-    - target: {fileID: 6920173313082963833, guid: 4473164a3b993574a9f3c6db04d94f3e, type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 1601342707}
@@ -15796,14 +15788,6 @@ PrefabInstance:
       propertyPath: tilemap
       value: 
       objectReference: {fileID: 1046817521}
-    - target: {fileID: 6920173313082963833, guid: 4473164a3b993574a9f3c6db04d94f3e, type: 3}
-      propertyPath: spawnMargin
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6920173313082963833, guid: 4473164a3b993574a9f3c6db04d94f3e, type: 3}
-      propertyPath: numberOfEnemiesToSpawn
-      value: 5
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4473164a3b993574a9f3c6db04d94f3e, type: 3}
 --- !u!1001 &8812273927081776820
