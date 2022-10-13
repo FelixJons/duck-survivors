@@ -104,13 +104,23 @@ namespace Enemies
 
         private bool CellIsInsideScreenWithMargin(Vector3 cellWorldPosition, int marginInCellDistance)
         {
-            Vector3 screenPosition = mainCamera.WorldToScreenPoint(cellWorldPosition);
+            Vector3 cellViewportPoint = mainCamera.WorldToViewportPoint(cellWorldPosition);
 
             // Check if the given point is within the screen position plus an additional margin.
-            return screenPosition.x + marginInCellDistance * pixelsPerUnit >= 0 &&
-                   screenPosition.x - marginInCellDistance * pixelsPerUnit <= Screen.width &&
-                   screenPosition.y + marginInCellDistance * pixelsPerUnit >= 0 &&
-                   screenPosition.y - marginInCellDistance * pixelsPerUnit <= Screen.height;
+            return cellViewportPoint.x + marginInCellDistance * PixelToViewportMagnitudeX(pixelsPerUnit) >= 0 &&
+                   cellViewportPoint.x - marginInCellDistance * PixelToViewportMagnitudeX(pixelsPerUnit) <= 1.0 &&
+                   cellViewportPoint.y + marginInCellDistance * PixelToViewportMagnitudeY(pixelsPerUnit) >= 0 &&
+                   cellViewportPoint.y - marginInCellDistance * PixelToViewportMagnitudeY(pixelsPerUnit) <= 1.0;
+        }
+
+        private float PixelToViewportMagnitudeX(int pixelMagnitude)
+        {
+            return pixelMagnitude * (1f / Screen.width);
+        }
+
+        private float PixelToViewportMagnitudeY(int pixelMagnitude)
+        {
+            return pixelMagnitude * (1f / Screen.height);
         }
     }
 }
