@@ -10,24 +10,23 @@ namespace Enemies
     {
         [SerializeField] private Tilemap tilemap;
         [SerializeField] private Enemy enemy;
-        [SerializeField] private int pixelsPerUnit = 16;
         [SerializeField] private Transform player;
-        [SerializeField] private int screenMargin = 1;
+        [SerializeField] private int screenDistanceMargin = 1;
         [SerializeField] private int spawnDistanceOutsideOfCamera = 3;
         [SerializeField] private int numberOfEnemiesToSpawn;
 
         private Camera mainCamera;
-        private List<Vector3> cellsWithTileWorld;
-
+        private List<Vector3> cellsWithTileWorldPosition;
 
         private void Start()
         {
             mainCamera = Camera.main;
 
-            cellsWithTileWorld = GetCellsWithTiles();
+            cellsWithTileWorldPosition = GetCellsWithTiles();
 
             Spawn();
         }
+
 
         private void Spawn()
         {
@@ -74,11 +73,11 @@ namespace Enemies
         {
             List<Vector3> availableSpawnPositions = new List<Vector3>();
 
-            foreach (Vector3 tileWorldPosition in cellsWithTileWorld)
+            foreach (Vector3 tileWorldPosition in cellsWithTileWorldPosition)
             {
                 // If the cell has a collider in it or it is inside the camera + screenMargin -> continue.
                 if (CellHasCollider(tileWorldPosition) ||
-                    CellIsInsideScreenWithMargin(tileWorldPosition, screenMargin))
+                    CellIsInsideScreenWithMargin(tileWorldPosition, screenDistanceMargin))
                 {
                     continue;
                 }
@@ -101,26 +100,20 @@ namespace Enemies
             return col != null;
         }
 
-
+        // Assumes that one cell equals one world unit.
         private bool CellIsInsideScreenWithMargin(Vector3 cellWorldPosition, int marginInCellDistance)
         {
-            Vector3 cellViewportPoint = mainCamera.WorldToViewportPoint(cellWorldPosition);
+            var maxDistanceVector = new Vector3(cellWorldPosition.x + marginInCellDistance,
+                cellWorldPosition.y + marginInCellDistance);
 
-            // Check if the given point is within the screen position plus an additional margin.
-            return cellViewportPoint.x + marginInCellDistance * PixelToViewportMagnitudeX(pixelsPerUnit) >= 0 &&
-                   cellViewportPoint.x - marginInCellDistance * PixelToViewportMagnitudeX(pixelsPerUnit) <= 1.0 &&
-                   cellViewportPoint.y + marginInCellDistance * PixelToViewportMagnitudeY(pixelsPerUnit) >= 0 &&
-                   cellViewportPoint.y - marginInCellDistance * PixelToViewportMagnitudeY(pixelsPerUnit) <= 1.0;
-        }
+            var minDistanceVector = new Vector3(cellWorldPosition.x - marginInCellDistance,
+                cellWorldPosition.y + -marginInCellDistance);
 
-        private float PixelToViewportMagnitudeX(int pixelMagnitude)
-        {
-            return pixelMagnitude * (1f / Screen.width);
-        }
+            maxDistanceVector = mainCamera.WorldToViewportPoint(maxDistanceVector);
+            minDistanceVector = mainCamera.WorldToViewportPoint(minDistanceVector);
 
-        private float PixelToViewportMagnitudeY(int pixelMagnitude)
-        {
-            return pixelMagnitude * (1f / Screen.height);
+            return maxDistanceVector.x >= 0 && maxDistanceVector.y >= 0 && minDistanceVector.x <= 1.0f &&
+                   minDistanceVector.y <= 1.0f;
         }
     }
 }
